@@ -29,7 +29,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: ./.github/actions/pnpm-setup
+      - name: Setup pnpm
+        uses: ./.github/actions/pnpm-setup
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
