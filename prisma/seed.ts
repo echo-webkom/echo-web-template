@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import {PrismaClient} from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -18,8 +18,7 @@ async function main() {
       },
       {
         title: "Foo bar",
-        content:
-          "Foo bar baz qux quux corge grault garply waldo fred plugh xyzzy thud.",
+        content: "Foo bar baz qux quux corge grault garply waldo fred plugh xyzzy thud.",
         published: false,
       },
     ],

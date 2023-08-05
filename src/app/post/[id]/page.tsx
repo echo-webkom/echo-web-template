@@ -1,7 +1,7 @@
-import { prisma } from "@/lib/db/prisma";
-import { notFound } from "next/navigation";
-import { Metadata } from "next/types";
-import { AlertOctagon } from "lucide-react";
+import {notFound} from "next/navigation";
+import {Metadata} from "next/types";
+import {prisma} from "@/lib/db/prisma";
+import {AlertOctagon} from "lucide-react";
 
 /**
  * Type for the props passed to the page.
@@ -22,7 +22,7 @@ type Props = {
  * Gives a 404 page if the id is not a number,
  * or if the post does not exist.
  */
-const getData = async ({ params }: Props) => {
+const getData = async ({params}: Props) => {
   const parsedId = Number(params.id);
 
   if (isNaN(parsedId)) {
@@ -52,10 +52,8 @@ const getData = async ({ params }: Props) => {
  * the metadata for any post. This uses the
  * `getData` function to get the post.
  */
-export const generateMetadata = async ({
-  params,
-}: Props): Promise<Metadata> => {
-  const { post } = await getData({ params });
+export const generateMetadata = async ({params}: Props): Promise<Metadata> => {
+  const {post} = await getData({params});
 
   return {
     title: post.title,
@@ -66,15 +64,15 @@ export const generateMetadata = async ({
  * The page displayed for the user. Also uses the `getData`
  * function to get the post.
  */
-export default async function Post({ params }: Props) {
-  const { post } = await getData({ params });
+export default async function Post({params}: Props) {
+  const {post} = await getData({params});
 
   return (
-    <main className="py-10 max-w-screen-md mx-auto w-full">
+    <main className="mx-auto w-full max-w-screen-md py-10">
       {!post.published && (
-        <div className="rounded-lg my-4 px-2 py-4 border-2 border-red-600 bg-red-200 flex items-center">
-          <AlertOctagon className="w-6 h-6 mr-2 text-red-600" />
-          <p className="text-red-700 font-bold">This post is not published</p>
+        <div className="my-4 flex items-center rounded-lg border-2 border-red-600 bg-red-200 px-2 py-4">
+          <AlertOctagon className="mr-2 h-6 w-6 text-red-600" />
+          <p className="font-bold text-red-700">This post is not published</p>
         </div>
       )}
 
