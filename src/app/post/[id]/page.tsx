@@ -1,6 +1,8 @@
+import {cache} from "react";
 import {notFound} from "next/navigation";
 import {Metadata} from "next/types";
-import {prisma} from "@/lib/db/prisma";
+import {db} from "@/lib/db/drizzle";
+import {sql} from "drizzle-orm";
 import {AlertOctagon} from "lucide-react";
 
 /**
@@ -21,18 +23,14 @@ type Props = {
  *
  * Gives a 404 page if the id is not a number,
  * or if the post does not exist.
+ *
+ * This function is wrapped in the `cache` function
+ * from React to ensure that the data is only fetched
+ * once per page load.
  */
-const getData = async ({params}: Props) => {
-  const parsedId = Number(params.id);
-
-  if (isNaN(parsedId)) {
-    return notFound();
-  }
-
-  const post = await prisma.post.findUnique({
-    where: {
-      id: parsedId,
-    },
+const getData = cache(async ({params}: Props) => {
+  const post = await db.query.posts.findFirst({
+    where: (p, {eq, and, ne}) => and(eq(p.id, params.id), ne(p.publishedAt, sql`NULL`)),
   });
 
   if (!post) {
@@ -42,7 +40,7 @@ const getData = async ({params}: Props) => {
   return {
     post,
   };
-};
+});
 
 /**
  * Generates the metadata for the page.
@@ -69,7 +67,7 @@ export default async function Post({params}: Props) {
 
   return (
     <main className="mx-auto w-full max-w-screen-md py-10">
-      {!post.published && (
+      {!post.publishedAt && (
         <div className="my-4 flex items-center rounded-lg border-2 border-red-600 bg-red-200 px-2 py-4">
           <AlertOctagon className="mr-2 h-6 w-6 text-red-600" />
           <p className="font-bold text-red-700">This post is not published</p>

@@ -1,4 +1,4 @@
-import {GithubIcon} from "lucide-react";
+import {Github} from "lucide-react";
 
 export const Header = () => {
   return (
@@ -13,7 +13,7 @@ export const Header = () => {
             className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
             href="https://github.com/echo-webkom/echo-webkom-template"
           >
-            <GithubIcon className="mr-1 h-4 w-4" />
+            <Github className="mr-1 h-4 w-4" />
             GitHub
           </a>
         </nav>

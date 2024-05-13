@@ -1,5 +1,6 @@
-import {describe, expect, test} from "vitest";
-import {add} from "../logic";
+import { describe, expect, test } from "vitest";
+
+import { add } from "../logic";
 
 /**
  * Tests for add. `Describe` is a way to group tests together.

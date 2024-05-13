@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
   html,
   body {
     @apply text-gray-900 antialiased;
